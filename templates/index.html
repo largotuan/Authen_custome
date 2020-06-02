@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Xin chao cac bans</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="number" name="so1">
+    <input type="text" name="so2">
+    <input type="file" name="file1" >
+    <input type="submit" value="tinh tong">
+</form>
+<h2>Ket qua la: {{ ketqua }}</h2>
+</body>
+</html>
