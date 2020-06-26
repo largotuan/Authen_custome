@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
@@ -29,6 +30,16 @@ class TaiKhoan(models.Model):
 # 1 sinh viên có thể học nhiều lớp 1 lớp thì  có nhiều sinh viên học
 
 #no sql
+class HangSanXuat(models.Model):
+    ten_hang = models.CharField(max_length=255)
+class HangHoa(models.Model):
+    ten_hang = models.CharField(max_length=255)
+    gia_tien = models.IntegerField(default=0)
+    hang = models.ForeignKey(HangSanXuat, on_delete=models.SET_NULL, null=True, blank=True)
+class User(AbstractUser):
+    phone_number = models.CharField(max_length=255,blank=True, null=True)
+    address = models.CharField(max_length=255,blank=True, null=True)
+
 
 
 

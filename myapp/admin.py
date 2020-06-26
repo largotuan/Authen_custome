@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import TaiKhoan
+from .models import TaiKhoan, User
 
-admin.site.register(TaiKhoan)
+admin.site.register(User)

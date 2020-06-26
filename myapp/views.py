@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 #MVT model view template , mvc
 
@@ -15,7 +17,8 @@ def handle_uploaded_file(f, tenfile):
             destination.write(chunk)
 
 
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
+    login_url = '/login/'
     def get(self, request):
         return render(request, 'index.html')
 
@@ -37,8 +40,32 @@ class TinhToanView(View):
         so_1 = request.GET.get('so1')
         so_2 = request.GET.get('so2')
         kq = int(so_1) + int(so_2)
-        ketqu = str(kq) + ' - theo kieu get'
+        #ketqua = str(kq) + ' - theo kieu get'
         du_lieu = {
-            'ketqua': ketqu
+            'ketqua': kq
         }
         return render(request, 'index.html', du_lieu)
+
+class LoginView(View):
+
+    def get(self, request):
+        return render(request, 'login.html')
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return HttpResponse('login thanh cong')
+        else:
+            return HttpResponse('login that bai')
+
+class ForgotPassword(View):
+
+    def get(self, request):
+        return render(request, 'forgot-password.html')
+class FormView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    def get(self, request):
+        return render(request, 'form.html')
